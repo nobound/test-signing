@@ -8,7 +8,6 @@ def get_signing_key(key_file: str) -> str:
     """
     Get the key from the PEM file
     """
-    key_file = "./rsa_private_key.pem"
     with open(key_file, "r", encoding="utf8") as file:
         contents = file.read()
     return contents
