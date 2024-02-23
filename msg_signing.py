@@ -1,21 +1,29 @@
-
+""" 
+Test RSA Signing
+"""
 import base64
 from OpenSSL.crypto import FILETYPE_PEM, load_privatekey, sign
 
-def get_signing_key():
+def get_signing_key(key_file: str) -> str:
+    """
+    Get the key from the PEM file
+    """
     key_file = "./rsa_private_key.pem"
-    key = open(key_file)
-    return key.read()
+    # key = open(key_file, encoding='utf-8')
+    # return key.read()
+    with open(key_file, "r", encoding="utf8") as file:
+        contents = file.read()
+    return contents
 
-def rsa_signing(payload):
-    pkey = load_privatekey(FILETYPE_PEM, get_signing_key())
+def test_rsa_signing():
+    """
+    Test signing with RAS key
+    """
+    key_file = "./rsa_private_key.pem"
+    payload = bytes("message to be signed", 'utf-8')
+    pkey = load_privatekey(FILETYPE_PEM, get_signing_key(key_file=key_file))
     signature = sign(pkey, payload, "sha256")
     s = str(base64.b64encode(signature), encoding='utf-8')
     print(s)
-
-def test_rsa_signing():
-    payload = bytes("message to be signed", 'utf-8')
-    rsa_signing(payload)
-
 
 test_rsa_signing()
