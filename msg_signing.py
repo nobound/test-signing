@@ -9,13 +9,11 @@ def get_signing_key(key_file: str) -> str:
     Get the key from the PEM file
     """
     key_file = "./rsa_private_key.pem"
-    # key = open(key_file, encoding='utf-8')
-    # return key.read()
     with open(key_file, "r", encoding="utf8") as file:
         contents = file.read()
     return contents
 
-def test_rsa_signing():
+def test_rsa_signing() -> None:
     """
     Test signing with RAS key
     """
